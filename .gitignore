@@ -1,0 +1,25 @@
+# 忽略 Qt 项目用户文件
+*.pro.user
+*.user
+*.pro.user.*
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+
+# 忽略编译生成的文件和目录
+build/
+*.o
+*.moc
+*.moc.cpp
+*.moc.hpp
+*.moc.def
+
+# 忽略编译输出
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 忽略其他临时文件
+*.autosave
+*.swp
+*.log

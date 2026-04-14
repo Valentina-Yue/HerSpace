@@ -23,6 +23,12 @@ set(PROJECT_SOURCES
         emotionalheartwidget.cpp
         healthcalculator.h
         healthcalculator.cpp
+        settingsdialog.h
+        settingsdialog.cpp
+        settingsdialog.ui
+        mooddialog.h
+        mooddialog.cpp
+        mooddialog.ui
         ${TS_FILES}
 )
 
@@ -30,6 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(HerSpace
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        settingsdialog.h settingsdialog.cpp settingsdialog.ui
+        mooddialog.h mooddialog.cpp mooddialog.ui
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

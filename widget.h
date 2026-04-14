@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QDate>
 #include "healthcalculator.h"
-#include "emotionalheartwidget.h"   // 必须包含，以便在 ui_widget.h 中识别提升的类
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,6 +32,8 @@ private:
 
     void updateUIForSelectedDate(const QDate &date);
     void refreshHeartWidget();
+    void updateCycleInfoLabel();      // 新增：更新周期信息标签
+    void loadLatestCycleData();       // 新增：从数据库加载最新数据
 };
 
 #endif // WIDGET_H

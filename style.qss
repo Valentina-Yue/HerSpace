@@ -1,0 +1,179 @@
+/* 全局样式 */
+QWidget {
+    font-family: "Quicksand", "Microsoft YaHei", sans-serif;
+    font-size: 11pt;
+    background-color: #fdf6f0;  /* 暖白基色 */
+    color: #5a4a42;
+}
+
+/* 主窗口背景 */
+Widget {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #fdf6f0, stop:1 #f8ede3);
+}
+
+/* 标题标签 */
+QLabel#labelTitle {
+    font-size: 28pt;
+    font-weight: bold;
+    color: #c96b7e;
+    padding: 2px;
+}
+
+/* 周期信息标签 */
+QLabel#labelCycleInfo {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #9b6b7c;
+    padding: 1px;
+}
+
+/* 语录标签 */
+QLabel#labelInspireQuote {
+    font-size: 12pt;
+    font-style: italic;
+    color: #7d6b7a;
+    background-color: rgba(255, 240, 235, 0.6);
+    border-radius: 15px;
+    padding: 2px;
+    margin: 5px 10px;
+}
+
+/* 提示标签 */
+QLabel#labelHint {
+    font-size: 10pt;
+    color: #8a7a6e;
+    padding: 2px;
+    background-color: rgba(255, 250, 245, 0.5);
+    border-radius: 8px;
+}
+
+/* 日历控件 */
+QCalendarWidget {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c9;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QCalendarWidget QToolButton {
+    color: #c96b7e;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+QCalendarWidget QToolButton:hover {
+    background-color: #f3e2d9;
+}
+
+QCalendarWidget QMenu {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c9;
+}
+
+QCalendarWidget QSpinBox {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c9;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+QCalendarWidget QAbstractItemView:enabled {
+    color: #5a4a42;
+    background-color: #ffffff;
+    selection-background-color: #f1d5d5;
+    selection-color: #5a4a42;
+}
+
+/* 按钮通用样式 */
+QPushButton {
+    background-color: #e6c4c0;
+    color: #5a4a42;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    padding: 2px 15px;
+    min-width: 125px;
+}
+
+QPushButton:hover {
+    background-color: #dbb2ad;
+}
+
+QPushButton:pressed {
+    background-color: #ca9f9a;
+}
+
+/* 爱心控件的父容器背景透明 */
+#heartContainer {
+    background-color: transparent;
+}
+
+/* 对话框样式 */
+QDialog {
+    background-color: #fdf6f0;
+}
+
+QDialog QLabel {
+    color: #5a4a42;
+}
+
+QDialog QLineEdit, QDialog QTextEdit, QDialog QSpinBox, QDialog QDateEdit {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c9;
+    border-radius: 8px;
+    padding: 2px;
+}
+
+QDialog QPushButton {
+    background-color: #e6c4c0;
+    min-width: 80px;
+}
+
+QSpinBox, QDateEdit {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c9;
+    border-radius: 8px;
+    padding: 6px;
+    min-height: 24px;  /* 确保足够高度容纳按钮 */
+}
+
+QSpinBox::up-button, QDateEdit::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left: 1px solid #e6d5c9;
+    border-bottom: 1px solid #e6d5c9;
+    border-top-right-radius: 8px;
+}
+
+QSpinBox::down-button, QDateEdit::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+    width: 20px;
+    border-left: 1px solid #e6d5c9;
+    border-top: 1px solid #e6d5c9;
+    border-bottom-right-radius: 8px;
+}
+
+QSpinBox::up-button:hover, QDateEdit::up-button:hover,
+QSpinBox::down-button:hover, QDateEdit::down-button:hover {
+    background-color: #f3e2d9;
+}
+
+/* 滑块样式 */
+QSlider::groove:horizontal {
+    height: 6px;
+    background: #e6d5c9;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #c96b7e;
+    width: 18px;
+    margin: -6px 0;
+    border-radius: 9px;
+}

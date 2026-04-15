@@ -6,6 +6,9 @@
 
 EmotionalHeartWidget::EmotionalHeartWidget(QWidget *parent)
     : QWidget(parent), m_scale(1.0), m_moodLevel(0.5), m_cyclePhase(0) {
+
+    setAttribute(Qt::WA_TranslucentBackground);
+
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &EmotionalHeartWidget::updateAnimation);
     timer->start(50);
@@ -30,6 +33,9 @@ void EmotionalHeartWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
 
+    // 直接填充透明背景（依靠父窗口背景，无需手动清除）
+    painter.fillRect(rect(), Qt::transparent);
+
     // 根据周期阶段设置基础颜色
     QColor baseColor;
     switch(m_cyclePhase) {
@@ -50,7 +56,8 @@ void EmotionalHeartWidget::paintEvent(QPaintEvent *event) {
     painter.setPen(Qt::NoPen);
 
     QPointF center = rect().center();
-    qreal size = 50 * m_scale;
+    // 确保 size 不为 0
+    qreal size = qMin(width(), height()) * 0.5 * m_scale;  // 动态适应控件大小
 
     // 绘制爱心形状
     QPainterPath path;
@@ -65,7 +72,7 @@ void EmotionalHeartWidget::paintEvent(QPaintEvent *event) {
     painter.drawPath(path);
 
     // 绘制周期阶段文字
-    painter.setPen(Qt::white);
+    painter.setPen(Qt::black);
     painter.setFont(QFont("Arial", 10, QFont::Bold));
     QString phaseText;
     switch(m_cyclePhase) {

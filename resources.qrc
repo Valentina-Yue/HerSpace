@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>resources/fonts/Quicksand-Bold.ttf</file>
+        <file>resources/fonts/Quicksand-Light.ttf</file>
+        <file>resources/fonts/Quicksand-Medium.ttf</file>
+        <file>resources/fonts/Quicksand-Regular.ttf</file>
+        <file>resources/fonts/Quicksand-SemiBold.ttf</file>
+    </qresource>
+    <qresource prefix="/styles">
+        <file>style.qss</file>
+    </qresource>
+</RCC>

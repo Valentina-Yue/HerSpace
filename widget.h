@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDate>
 #include "healthcalculator.h"
+#include "inspiremanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,11 +30,13 @@ private:
     Ui::Widget *ui;
     HealthCalculator *healthCalc;
     CycleData currentCycleData;
+    InspireManager inspireMgr;          // 语录管理器
 
     void updateUIForSelectedDate(const QDate &date);
     void refreshHeartWidget();
-    void updateCycleInfoLabel();      // 新增：更新周期信息标签
-    void loadLatestCycleData();       // 新增：从数据库加载最新数据
+    void updateCycleInfoLabel();      // 更新周期信息标签
+    void loadLatestCycleData();       // 从数据库加载最新数据
+    void updateInspireQuote();          // 更新语录显示
 };
 
 #endif // WIDGET_H

@@ -33,6 +33,9 @@ Widget::Widget(QWidget *parent)
 
     // 显示今天对应的周期阶段建议
     updateUIForSelectedDate(today);
+
+    // 更新语录
+    updateInspireQuote();
 }
 
 Widget::~Widget()
@@ -75,6 +78,13 @@ void Widget::updateCycleInfoLabel()
     ui->labelCycleInfo->setText(info);
 }
 
+void Widget::updateInspireQuote()
+{
+    int phase = healthCalc->getCyclePhase(currentCycleData);
+    QString quote = inspireMgr.getQuoteForPhase(phase);
+    ui->labelInspireQuote->setText("✨ " + quote + " ✨");
+}
+
 void Widget::refreshHeartWidget()
 {
     if (ui->heartContainer) {
@@ -83,6 +93,9 @@ void Widget::refreshHeartWidget()
         // 情绪值默认为 0.8，实际可从数据库读取今日情绪
         ui->heartContainer->setMoodLevel(0.8);
     }
+
+    // 阶段变化时更新语录
+    updateInspireQuote();
 }
 
 void Widget::updateUIForSelectedDate(const QDate &date)

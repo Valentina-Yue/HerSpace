@@ -6,7 +6,6 @@
 #include "periodconfirmdialog.h"
 #include "historymanagerdialog.h"
 #include "periodstartdialog.h"
-#include "databasemanager.h"
 #include <QMessageBox>
 #include <QDebug>
 #include <QSqlQuery>
@@ -39,19 +38,15 @@ Widget::Widget(QWidget *parent)
     // 显示今天对应的周期阶段建议
     updateUIForSelectedDate(today);
 
-    // 🔥 使用正确的数据库连接
-    QSqlDatabase db = DatabaseManager::instance().getDatabase();
-
-    // 检查首次使用
-    QSqlQuery countQuery(db);
-    countQuery.exec("SELECT COUNT(*) FROM period_history");
-    int recordCount = 0;
-    if (countQuery.next()) {
-        recordCount = countQuery.value(0).toInt();
-    }
+    // 🔥 检查是否首次使用（无任何历史记录）
+    QSqlQuery countQuery("SELECT COUNT(*) FROM period_history");
+    countQuery.next();
+    int recordCount = countQuery.value(0).toInt();
 
     // Debug
     qDebug() << "当前历史记录数:" << recordCount;
+
+    qDebug() << "=== 构造函数：当前历史记录数 ===" << recordCount;
 
     if (recordCount == 0) {
         // 首次使用，显示欢迎引导
@@ -94,11 +89,9 @@ void Widget::loadLatestCycleData()
 void Widget::updateCycleInfoLabel()
 {
     QDate today = QDate::currentDate();
-    QSqlDatabase db = DatabaseManager::instance().getDatabase();
 
     // 检查是否有历史记录
-    QSqlQuery countQuery(db);
-    countQuery.exec("SELECT COUNT(*) FROM period_history");
+    QSqlQuery countQuery("SELECT COUNT(*) FROM period_history");
     countQuery.next();
     int recordCount = countQuery.value(0).toInt();
 
@@ -108,8 +101,7 @@ void Widget::updateCycleInfoLabel()
     }
 
     // 获取最近一次经期
-    QSqlQuery lastQuery(db);
-    lastQuery.exec("SELECT start_date FROM period_history ORDER BY start_date DESC LIMIT 1");
+    QSqlQuery lastQuery("SELECT start_date FROM period_history ORDER BY start_date DESC LIMIT 1");
     lastQuery.next();
     QDate lastPeriod = QDate::fromString(lastQuery.value(0).toString(), "yyyy-MM-dd");
 
@@ -256,16 +248,23 @@ void Widget::on_btnHealthData_clicked()
 
 void Widget::on_btnSettings_clicked()
 {
+    // 🔥 强制从数据库重新加载最新数据
     currentCycleData = healthCalc->getLatestCycleData();
 
+    qDebug() << "打开设置界面 - 当前数据:";
+    qDebug() << "  上次经期:" << currentCycleData.lastPeriodStart.toString("yyyy-MM-dd");
+    qDebug() << "  周期长度:" << currentCycleData.cycleLength;
+    qDebug() << "  持续天数:" << currentCycleData.periodLength;
+
+    // 🔥 传入主窗口的 healthCalc 对象
     SettingsDialog dialog(healthCalc, this);
     dialog.setCycleData(currentCycleData);
 
-    QSqlDatabase db = DatabaseManager::instance().getDatabase();
-    QSqlQuery query(db);
-    query.exec("SELECT COUNT(*) FROM period_history");
+    QSqlQuery query("SELECT COUNT(*) FROM period_history");
     if (query.next()) {
-        dialog.setRecordCount(query.value(0).toInt());
+        int count = query.value(0).toInt();
+        dialog.setRecordCount(count);
+        qDebug() << "  记录总数:" << count;
     }
 
     connect(&dialog, &SettingsDialog::dataManuallyChanged, this, [this]() {
@@ -282,26 +281,22 @@ void Widget::on_btnSettings_clicked()
 void Widget::checkPeriodConfirmation()
 {
     QDate today = QDate::currentDate();
-    QSqlDatabase db = DatabaseManager::instance().getDatabase();
 
     // 如果没有历史记录，不弹窗
-    QSqlQuery countQuery(db);
-    countQuery.exec("SELECT COUNT(*) FROM period_history");
-    countQuery.next();
-    if (countQuery.value(0).toInt() == 0) {
+    QSqlQuery countQuery("SELECT COUNT(*) FROM period_history");
+    if (countQuery.next() && countQuery.value(0).toInt() == 0) {
         qDebug() << "无历史记录，跳过经期确认检查";
         return;
     }
 
     // 获取最近一次经期开始日期
-    QSqlQuery lastQuery(db);
-    lastQuery.exec("SELECT start_date FROM period_history ORDER BY start_date DESC LIMIT 1");
+    QSqlQuery lastQuery("SELECT start_date FROM period_history ORDER BY start_date DESC LIMIT 1");
     if (!lastQuery.next()) {
         return;
     }
     QDate lastPeriod = QDate::fromString(lastQuery.value(0).toString(), "yyyy-MM-dd");
 
-    // 预测下一次经期
+    // 预测下一次经期（基于最近一次 + 平均周期）
     QDate expectedStart = lastPeriod.addDays(currentCycleData.cycleLength);
     int daysDiff = expectedStart.daysTo(today);
 
@@ -312,7 +307,7 @@ void Widget::checkPeriodConfirmation()
     qDebug() << "天数差:" << daysDiff;
 
     // 检查今天是否已有记录
-    QSqlQuery todayQuery(db);
+    QSqlQuery todayQuery;
     todayQuery.prepare("SELECT id FROM period_history WHERE start_date = ?");
     todayQuery.bindValue(0, today.toString("yyyy-MM-dd"));
     todayQuery.exec();
@@ -320,13 +315,15 @@ void Widget::checkPeriodConfirmation()
 
     qDebug() << "今日是否有记录:" << hasTodayRecord;
 
-    // 弹窗条件：推迟0-14天，或提前0-3天，且今天没有记录
+    // 弹窗条件：
+    // 1. 推迟了 0~14 天，或者提前 0~3 天
+    // 2. 今天没有记录
     bool shouldPopup = false;
     if (!hasTodayRecord) {
         if (daysDiff >= 0 && daysDiff <= 14) {
-            shouldPopup = true;
+            shouldPopup = true;  // 推迟
         } else if (daysDiff >= -3 && daysDiff < 0) {
-            shouldPopup = true;
+            shouldPopup = true;  // 提前
         }
     }
 
@@ -335,6 +332,7 @@ void Widget::checkPeriodConfirmation()
     if (shouldPopup) {
         PeriodConfirmDialog dialog(healthCalc, expectedStart, this);
         if (dialog.exec() == QDialog::Accepted) {
+            // 处理用户选择
             if (dialog.result() == PeriodConfirmDialog::Came) {
                 // 记录今天为经期开始
                 healthCalc->recordPeriodStart(today);
@@ -343,8 +341,7 @@ void Widget::checkPeriodConfirmation()
                 refreshHeartWidget();
                 updateCycleInfoLabel();
                 updateUIForSelectedDate(ui->calendarWidget->selectedDate());
-                QMessageBox::information(this, "记录成功",
-                                         "经期已于今天开始，已为您记录。\n好好休息哦 💕");
+                QMessageBox::information(this, "记录成功", "经期已记录，好好休息哦 💕");
             } else if (dialog.result() == PeriodConfirmDialog::Early) {
                 QDate earlyDate = dialog.earlyDate();
                 healthCalc->recordPeriodStart(earlyDate);
@@ -356,28 +353,11 @@ void Widget::checkPeriodConfirmation()
                 QMessageBox::information(this, "记录成功",
                                          QString("经期已于 %1 开始，已为您记录。").arg(earlyDate.toString("yyyy-MM-dd")));
             } else {
-                // 🔥 还没来，显示暖心建议
-                int daysLate = daysDiff;
-                QString advice;
-
-                if (daysLate <= 3) {
-                    advice = "别担心，1-3天的波动完全正常。\n\n"
-                             "压力、作息变化、饮食调整都可能导致经期轻微推迟。\n"
-                             "放松心情，保持规律作息，她会如约而至的。";
-                } else if (daysLate <= 7) {
-                    advice = "经期推迟一周以内是常见现象。\n\n"
-                             "可能的原因包括：近期压力大、睡眠不足、运动量变化等。\n"
-                             "试着做一些舒缓的运动，如瑜伽或散步，帮助身体放松。";
-                } else {
-                    advice = "经期已推迟超过一周。\n\n"
-                             "如果排除了怀孕可能，建议关注近期的生活状态：\n"
-                             "• 是否压力过大？\n"
-                             "• 作息是否规律？\n"
-                             "• 饮食是否有大变化？\n\n"
-                             "如果持续推迟超过两周，建议咨询医生哦。";
-                }
-
-                QMessageBox::information(this, "贴心小建议 🌸", advice);
+                // 还没来，显示安慰
+                QMessageBox::information(this, "贴心提示",
+                                         "身体有自己的节奏，偶尔推迟几天是正常的。\n"
+                                         "放松心情，注意休息，她会如约而至。\n\n"
+                                         "如果经期已至，请随时点击「经期来了」记录哦。");
             }
         }
     }
@@ -404,8 +384,7 @@ void Widget::on_btnHistory_clicked()
 // 自动计算平均值
 void Widget::recalculateAverages()
 {
-    QSqlDatabase db = DatabaseManager::instance().getDatabase();
-    QSqlQuery query(db);
+    QSqlQuery query(DatabaseManager::instance().getDatabase());
 
     // 先查询有多少条记录
     query.exec("SELECT COUNT(*) FROM period_history");
@@ -422,11 +401,13 @@ void Widget::recalculateAverages()
         double avgDuration = query.value(0).toDouble();
         if (avgDuration > 0) {
             currentCycleData.periodLength = qRound(avgDuration);
+            qDebug() << "平均持续天数:" << currentCycleData.periodLength;
         }
     }
 
     // 只有当记录数 >= 2 时才计算平均周期
     if (recordCount >= 2) {
+        // 🔥 使用更可靠的查询：先按日期排序，然后计算相邻日期的差值
         QVector<QDate> dates;
         query.exec("SELECT start_date FROM period_history ORDER BY start_date ASC");
         while (query.next()) {
@@ -436,14 +417,18 @@ void Widget::recalculateAverages()
             }
         }
 
+        // 计算相邻日期的差值
         QVector<int> cycles;
         for (int i = 1; i < dates.size(); i++) {
             int cycle = dates[i-1].daysTo(dates[i]);
-            if (cycle > 0 && cycle < 100) {
+            if (cycle > 0 && cycle < 100) {  // 合理的周期范围：1-99天
                 cycles.append(cycle);
+                qDebug() << "周期" << i << ":" << dates[i-1].toString("yyyy-MM-dd")
+                         << "->" << dates[i].toString("yyyy-MM-dd") << "=" << cycle << "天";
             }
         }
 
+        // 计算平均值
         if (!cycles.isEmpty()) {
             double sum = 0;
             for (int cycle : cycles) {
@@ -451,10 +436,20 @@ void Widget::recalculateAverages()
             }
             double avgCycle = sum / cycles.size();
             currentCycleData.cycleLength = qRound(avgCycle);
+            qDebug() << "平均周期:" << currentCycleData.cycleLength << "天 (基于" << cycles.size() << "个周期)";
+        } else {
+            qDebug() << "无法计算有效周期，保持原有值:" << currentCycleData.cycleLength;
         }
+    } else {
+        qDebug() << "记录数不足2条，无法计算平均周期";
     }
 
-    healthCalc->saveCycleData(currentCycleData);
+    // 🔥 关键：保存到数据库
+    bool saved = healthCalc->saveCycleData(currentCycleData);
+    qDebug() << "保存周期数据:" << (saved ? "成功" : "失败");
+    qDebug() << "保存的值 - 上次经期:" << currentCycleData.lastPeriodStart.toString("yyyy-MM-dd")
+             << "周期:" << currentCycleData.cycleLength
+             << "持续:" << currentCycleData.periodLength;
 }
 
 // 创建"经期来了"记录对话框
@@ -466,36 +461,44 @@ void Widget::on_btnPeriodStart_clicked()
         int duration = dialog.getDuration();
         bool ended = dialog.isEnded();
 
-        QSqlDatabase db = DatabaseManager::instance().getDatabase();
-        QSqlQuery query(db);
+        QSqlQuery query(DatabaseManager::instance().getDatabase());
 
         if (ended && duration > 0) {
+            // 已结束，有持续天数
             query.prepare("INSERT OR REPLACE INTO period_history (start_date, duration, end_date) VALUES (?, ?, ?)");
             query.bindValue(0, start.toString("yyyy-MM-dd"));
             query.bindValue(1, duration);
             query.bindValue(2, start.addDays(duration - 1).toString("yyyy-MM-dd"));
         } else {
+            // 未结束，只记录开始日期
             query.prepare("INSERT OR REPLACE INTO period_history (start_date) VALUES (?)");
             query.bindValue(0, start.toString("yyyy-MM-dd"));
         }
 
         if (query.exec()) {
+            // 更新当前周期数据中的最近一次经期
             currentCycleData.lastPeriodStart = start;
             if (ended && duration > 0) {
                 currentCycleData.periodLength = duration;
             }
 
+            // 重新计算平均值
             recalculateAverages();
+
+            // 🔥 重新从数据库加载，确保数据同步
             currentCycleData = healthCalc->getLatestCycleData();
 
+            // 刷新界面
             refreshHeartWidget();
             updateCycleInfoLabel();
             updateUIForSelectedDate(ui->calendarWidget->selectedDate());
 
             QMessageBox::information(this, "记录成功",
-                                     QString("经期开始于 %1 已记录。").arg(start.toString("yyyy-MM-dd")));
+                                     QString("经期开始于 %1 已记录。\n好好照顾自己哦 💕").arg(start.toString("yyyy-MM-dd")));
         } else {
             QMessageBox::warning(this, "错误", "保存失败：" + query.lastError().text());
+            qDebug() << "SQL错误:" << query.lastError().text();
+            qDebug() << "执行的SQL:" << query.lastQuery();
         }
     }
 }

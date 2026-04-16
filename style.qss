@@ -177,3 +177,57 @@ QSlider::handle:horizontal {
     margin: -6px 0;
     border-radius: 9px;
 }
+
+/* ========== 健康统计对话框专用样式 ========== */
+HealthStatsDialog {
+    background-color: #fdf6f0;
+}
+
+HealthStatsDialog QLabel#labelTitle {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #c96b7e;
+    padding: 2px 0 3px 0;
+    qproperty-alignment: AlignCenter;
+}
+
+HealthStatsDialog QLabel#labelStatsSummary {
+    font-size: 13pt;
+    color: #5a4a42;
+    background-color: rgba(255, 240, 235, 0.6);
+    border-radius: 15px;
+    padding: 2px 3px;
+    margin: 2px 4px;
+    line-height: 1.5;
+}
+
+HealthStatsDialog QPushButton#btnClose {
+    background-color: #e6c4c0;
+    color: #5a4a42;
+    font-weight: bold;
+    font-size: 12pt;
+    border: none;
+    border-radius: 25px;
+    padding: 2px 0;
+    margin: 3px 16px 4px 16px;
+    min-width: 120px;
+}
+
+HealthStatsDialog QPushButton#btnClose:hover {
+    background-color: #dbb2ad;
+}
+
+/* 图表容器背景透明，保证与对话框背景融合 */
+HealthStatsDialog QChartView {
+    background-color: transparent;
+    border: none;
+}
+
+/* SettingsDialog */
+SettingsDialog QLabel#labelLastPeriod,
+SettingsDialog QLabel#labelCycleLength,
+SettingsDialog QLabel#labelPeriodLength,
+SettingsDialog QLabel#labelRecordCount {
+    font-weight: bold;
+    color: #c96b7e;
+}

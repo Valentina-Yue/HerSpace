@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PeriodConfirmDialog</class>
+ <widget class="QDialog" name="PeriodConfirmDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>经期确认</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #fdf6f0;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="labelIcon">
+     <property name="font">
+      <font>
+       <pointsize>36</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>🌸</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelPrompt">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>预计经期开始于 2026-04-08，您的情况是？</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">padding: 15px;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayoutButtons">
+     <item>
+      <widget class="QPushButton" name="btnCame">
+       <property name="text">
+        <string>✅ 已经来了</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #c9b2a6;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #b89f92;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnNotYet">
+       <property name="text">
+        <string>⏳ 还没来</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #d4c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #c4b2ad;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnEarly">
+       <property name="text">
+        <string>📅 提前来了</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #e6c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #dbb2ad;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

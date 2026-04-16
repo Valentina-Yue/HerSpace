@@ -9,8 +9,8 @@
 
 struct CycleData {
     QDate lastPeriodStart;
-    int cycleLength = 28; // 平均周期
-    int periodLength = 5; // 平均持续天数
+    int cycleLength = 28;
+    int periodLength = 5;
 };
 
 class HealthCalculator : public QObject {
@@ -19,29 +19,17 @@ public:
     explicit HealthCalculator(QObject *parent = nullptr);
     ~HealthCalculator();
 
-    // 初始化数据库
-    bool initDatabase();
-
-    // 预测下一次生理期开始时间
+    // 不需要 initDatabase，由单例管理
     QDate predictNextPeriod(const CycleData& data);
-
-    // 计算当前处于周期的第几天
     int getCurrentDayInCycle(const CycleData& data);
-
-    // 获取周期阶段
     int getCyclePhase(const CycleData& data);
-
-    // 智能建议
     QString getAdvice(int day, int phase);
-
-    // 保存周期数据
     bool saveCycleData(const CycleData& data);
-
-    // 获取最新周期数据
     CycleData getLatestCycleData();
+    bool recordPeriodStart(const QDate &startDate);
 
 private:
-    QSqlDatabase db;
+    QSqlDatabase getDB() const;  // 辅助函数
 };
 
 #endif // HEALTHCALCULATOR_H

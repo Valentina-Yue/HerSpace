@@ -6,381 +6,216 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>420</height>
+    <width>550</width>
+    <height>850</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
-    <height>200</height>
+    <width>520</width>
+    <height>705</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>HerSpace · 女性健康伴侣</string>
   </property>
-  <widget class="EmotionalHeartWidget" name="heartContainer" native="true">
-   <property name="enabled">
-    <bool>true</bool>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayoutMain">
+   <property name="spacing">
+    <number>8</number>
    </property>
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>230</y>
-     <width>105</width>
-     <height>75</height>
-    </rect>
+   <property name="leftMargin">
+    <number>15</number>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
+   <property name="topMargin">
+    <number>15</number>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>105</width>
-     <height>75</height>
-    </size>
+   <property name="rightMargin">
+    <number>15</number>
    </property>
-   <property name="font">
-    <font>
-     <family>字体圈欣意冠黑体</family>
-     <pointsize>9</pointsize>
-     <bold>true</bold>
-    </font>
+   <property name="bottomMargin">
+    <number>15</number>
    </property>
-   <property name="autoFillBackground">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>10</y>
-     <width>525</width>
-     <height>390</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout">
-    <property name="sizeConstraint">
-     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
-    </property>
-    <property name="fieldGrowthPolicy">
-     <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
-    </property>
-    <property name="labelAlignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-    <property name="formAlignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-    <property name="horizontalSpacing">
-     <number>20</number>
-    </property>
-    <property name="verticalSpacing">
-     <number>10</number>
-    </property>
-    <property name="leftMargin">
-     <number>40</number>
-    </property>
-    <property name="topMargin">
-     <number>15</number>
-    </property>
-    <property name="rightMargin">
-     <number>40</number>
-    </property>
-    <property name="bottomMargin">
-     <number>15</number>
-    </property>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>155</width>
-        <height>55</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>22</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LayoutDirection::LeftToRight</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
-      <property name="text">
-       <string>HerSpace</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelHint">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>155</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LayoutDirection::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QCalendarWidget" name="calendarWidget">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>105</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>9</pointsize>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>ArrowCursor</cursorShape>
-      </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
-      <property name="gridVisible">
-       <bool>true</bool>
-      </property>
-      <property name="dateEditEnabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="btnMoodRecord">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>155</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LayoutDirection::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>记录情绪</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="btnHealthData">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>155</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LayoutDirection::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>健康数据</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <widget class="QPushButton" name="btnSettings">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LayoutDirection::LeftToRight</enum>
-      </property>
-      <property name="text">
-       <string>设置</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="labelCycleInfo">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>265</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>11</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>距离下次经期还有 X 天</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-      <property name="margin">
-       <number>10</number>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="labelInspireQuote">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>265</width>
-        <height>35</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>字体圈欣意冠黑体</family>
-        <pointsize>11</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>語錄</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-   <zorder>labelCycleInfo</zorder>
-   <zorder>label</zorder>
-   <zorder>calendarWidget</zorder>
-   <zorder>btnHealthData</zorder>
-   <zorder>btnMoodRecord</zorder>
-   <zorder>btnSettings</zorder>
-   <zorder>labelInspireQuote</zorder>
-   <zorder>labelHint</zorder>
-  </widget>
-  <zorder>layoutWidget</zorder>
-  <zorder>heartContainer</zorder>
+   <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="font">
+      <font>
+       <family>Quicksand</family>
+       <pointsize>28</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>🌸 HerSpace</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelCycleInfo">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #9b6b7c; padding: 8px; background-color: rgba(255, 240, 235, 0.5); border-radius: 12px;</string>
+     </property>
+     <property name="text">
+      <string>距离下次经期还有 -- 天</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCalendarWidget" name="calendarWidget">
+     <property name="gridVisible">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QCalendarWidget::SelectionMode::SingleSelection</enum>
+     </property>
+     <property name="horizontalHeaderFormat">
+      <enum>QCalendarWidget::HorizontalHeaderFormat::ShortDayNames</enum>
+     </property>
+     <property name="verticalHeaderFormat">
+      <enum>QCalendarWidget::VerticalHeaderFormat::NoVerticalHeader</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelHint">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #8a7a6e; padding: 8px; background-color: rgba(255, 250, 245, 0.6); border-radius: 8px;</string>
+     </property>
+     <property name="text">
+      <string>选中日期：--</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="EmotionalHeartWidget" name="heartContainer" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>180</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelInspireQuote">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #7d6b7a; padding: 12px; background-color: rgba(255, 240, 235, 0.4); border-radius: 15px; margin: 5px;</string>
+     </property>
+     <property name="text">
+      <string>✨ 每一天，都是爱自己的开始 ✨</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayoutButtons">
+     <property name="horizontalSpacing">
+      <number>10</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>8</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btnPeriodStart">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #d4a4a4;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #c28e8e;
+}</string>
+       </property>
+       <property name="text">
+        <string>🌸 经期来了</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnMoodRecord">
+       <property name="text">
+        <string>😊 记录情绪</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="btnHealthData">
+       <property name="text">
+        <string>📊 健康数据</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="btnHistory">
+       <property name="text">
+        <string>📋 历史记录</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="btnSettings">
+       <property name="text">
+        <string>⚙️ 设置</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="btnExit">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #d4c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #c4b2ad;
+}</string>
+       </property>
+       <property name="text">
+        <string>🚪 退出</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <customwidgets>
   <customwidget>

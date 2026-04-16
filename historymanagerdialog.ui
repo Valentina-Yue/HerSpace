@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HistoryManagerDialog</class>
+ <widget class="QDialog" name="HistoryManagerDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>550</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>经期历史管理</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #fdf6f0;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>📋 经期历史记录</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelHint">
+     <property name="text">
+      <string>这里记录了你每次经期的开始日期和持续天数</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #7d6b7a; font-style: italic; padding: 5px;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="tableHistory">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTableWidget {
+    background-color: white;
+    border: 1px solid #e6d5c9;
+    border-radius: 10px;
+    gridline-color: #f0e0d8;
+}
+QTableWidget::item {
+    padding: 8px;
+}
+QTableWidget::item:selected {
+    background-color: #f1d5d5;
+    color: #5a4a42;
+}
+QHeaderView::section {
+    background-color: #f8ede3;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #e6d5c9;
+    font-weight: bold;
+}</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>开始日期</string>
+      </property>
+      <property name="width">
+       <number>200</number>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>持续天数</string>
+      </property>
+      <property name="width">
+       <number>150</number>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btnAdd">
+       <property name="text">
+        <string>➕ 添加记录</string>
+       </property>
+       <property name="minimumHeight">
+        <number>36</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #c9b2a6;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #b89f92;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnDelete">
+       <property name="text">
+        <string>🗑️ 删除选中</string>
+       </property>
+       <property name="minimumHeight">
+        <number>36</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #d4a4a4;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #c28e8e;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+       <widget class="QPushButton" name="btnEdit">
+         <property name="text">
+           <string>✏️ 编辑</string>
+         </property>
+         <property name="minimumHeight">
+           <number>36</number>
+         </property>
+         <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #a8c4a6;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #8fb38d;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnClose">
+       <property name="text">
+        <string>✓ 关闭</string>
+       </property>
+       <property name="minimumHeight">
+        <number>36</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #e6c4c0;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #dbb2ad;
+}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

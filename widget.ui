@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>850</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>520</width>
-    <height>705</height>
+    <height>850</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -51,7 +51,7 @@
       <string>🌸 HerSpace</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -63,14 +63,14 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #9b6b7c; padding: 8px; background-color: rgba(255, 240, 235, 0.5); border-radius: 12px;</string>
-     </property>
      <property name="text">
       <string>距离下次经期还有 -- 天</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #9b6b7c; padding: 8px; background-color: rgba(255, 240, 235, 0.5); border-radius: 12px;</string>
      </property>
     </widget>
    </item>
@@ -80,13 +80,13 @@
       <bool>true</bool>
      </property>
      <property name="selectionMode">
-      <enum>QCalendarWidget::SelectionMode::SingleSelection</enum>
+      <enum>QCalendarWidget::SingleSelection</enum>
      </property>
      <property name="horizontalHeaderFormat">
-      <enum>QCalendarWidget::HorizontalHeaderFormat::ShortDayNames</enum>
+      <enum>QCalendarWidget::ShortDayNames</enum>
      </property>
      <property name="verticalHeaderFormat">
-      <enum>QCalendarWidget::VerticalHeaderFormat::NoVerticalHeader</enum>
+      <enum>QCalendarWidget::NoVerticalHeader</enum>
      </property>
     </widget>
    </item>
@@ -97,14 +97,14 @@
        <pointsize>10</pointsize>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #8a7a6e; padding: 8px; background-color: rgba(255, 250, 245, 0.6); border-radius: 8px;</string>
-     </property>
      <property name="text">
       <string>选中日期：--</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #8a7a6e; padding: 8px; background-color: rgba(255, 250, 245, 0.6); border-radius: 8px;</string>
      </property>
     </widget>
    </item>
@@ -126,17 +126,17 @@
        <italic>true</italic>
       </font>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #7d6b7a; padding: 12px; background-color: rgba(255, 240, 235, 0.4); border-radius: 15px; margin: 5px;</string>
-     </property>
      <property name="text">
       <string>✨ 每一天，都是爱自己的开始 ✨</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #7d6b7a; padding: 12px; background-color: rgba(255, 240, 235, 0.4); border-radius: 15px; margin: 5px;</string>
      </property>
     </widget>
    </item>
@@ -150,6 +150,12 @@
      </property>
      <item row="0" column="0">
       <widget class="QPushButton" name="btnPeriodStart">
+       <property name="text">
+        <string>🌸 经期来了</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
     background-color: #d4a4a4;
@@ -162,9 +168,6 @@ QPushButton:hover {
     background-color: #c28e8e;
 }</string>
        </property>
-       <property name="text">
-        <string>🌸 经期来了</string>
-       </property>
       </widget>
      </item>
      <item row="0" column="1">
@@ -172,31 +175,116 @@ QPushButton:hover {
        <property name="text">
         <string>😊 记录情绪</string>
        </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #e6c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #dbb2ad;
+}</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QPushButton" name="btnHealthData">
+      <widget class="QPushButton" name="btnMoodHistory">
        <property name="text">
-        <string>📊 健康数据</string>
+        <string>📋 情绪历史</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #c9b2a6;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #b89f92;
+}</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="btnHistory">
+      <widget class="QPushButton" name="btnHealthData">
        <property name="text">
-        <string>📋 历史记录</string>
+        <string>📊 健康数据</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #e6c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #dbb2ad;
+}</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="btnSettings">
+      <widget class="QPushButton" name="btnHistory">
        <property name="text">
-        <string>⚙️ 设置</string>
+        <string>📋 经期历史</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #c9b2a6;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #b89f92;
+}</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
+      <widget class="QPushButton" name="btnSettings">
+       <property name="text">
+        <string>⚙️ 设置</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #e6c4c0;
+    border-radius: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #dbb2ad;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
       <widget class="QPushButton" name="btnExit">
+       <property name="text">
+        <string>🚪 退出</string>
+       </property>
+       <property name="minimumHeight">
+        <number>45</number>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
     background-color: #d4c4c0;
@@ -207,9 +295,6 @@ QPushButton:hover {
 QPushButton:hover {
     background-color: #c4b2ad;
 }</string>
-       </property>
-       <property name="text">
-        <string>🚪 退出</string>
        </property>
       </widget>
      </item>

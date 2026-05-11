@@ -28,13 +28,3 @@ void MoodDialog::on_sliderMood_valueChanged(int value)
 {
     ui->labelMoodValue->setText(QString::number(value));
 }
-
-void MoodDialog::on_btnSave_clicked()
-{
-    accept();
-}
-
-void MoodDialog::on_btnCancel_clicked()
-{
-    reject();
-}

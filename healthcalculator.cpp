@@ -21,30 +21,44 @@ QDate HealthCalculator::predictNextPeriod(const CycleData& data)
     return data.lastPeriodStart.addDays(data.cycleLength);
 }
 
-int HealthCalculator::getCurrentDayInCycle(const CycleData& data)
-{
+int HealthCalculator::getCurrentDayInCycle(const CycleData& data) {
     QDate today = QDate::currentDate();
     int daysSinceLast = data.lastPeriodStart.daysTo(today);
 
+    // 处理跨周期情况（选中日期在上次经期之前）
     if (daysSinceLast < 0) {
-        return daysSinceLast + data.cycleLength;
+        return daysSinceLast + data.cycleLength + 1;  // 🔥 +1 保持1-based
     }
 
-    return daysSinceLast % data.cycleLength;
+    // 🔥 统一使用公式：余数 + 1
+    return (daysSinceLast % data.cycleLength) + 1;
 }
 
-int HealthCalculator::getCyclePhase(const CycleData& data)
+int HealthCalculator::getCyclePhase(const CycleData& data, bool *isDelayed)
 {
+    QDate today = QDate::currentDate();
+    QDate expectedStart = data.lastPeriodStart.addDays(data.cycleLength);
+    int daysDiff = expectedStart.daysTo(today);
+
+    if (isDelayed) {
+        *isDelayed = (daysDiff > 0);
+    }
+
+    // 如果推迟超过 1 天，返回 -1 表示无法确定阶段
+    if (daysDiff > 1) {
+        return -1;  // 经期推迟中
+    }
+
     int day = getCurrentDayInCycle(data);
 
     if (day >= 1 && day <= data.periodLength) {
-        return 0;
+        return 0;  // 月经期
     } else if (day > data.periodLength && day <= 14) {
-        return 1;
+        return 1;  // 卵泡期
     } else if (day > 14 && day <= 16) {
-        return 2;
+        return 2;  // 排卵期
     } else {
-        return 3;
+        return 3;  // 黄体期
     }
 }
 
@@ -89,10 +103,12 @@ CycleData HealthCalculator::getLatestCycleData()
 
     if (histQuery.next()) {
         data.lastPeriodStart = QDate::fromString(histQuery.value(0).toString(), "yyyy-MM-dd");
-        int histDuration = histQuery.value(1).toInt();
+        // 在 getLatestCycleData() 中，读取 duration 后检查是否有效
+        int histDuration = histQuery.value(1).toInt();  // 如果是 NULL，toInt() 返回 0
         if (histDuration > 0) {
             data.periodLength = histDuration;
         }
+        // 否则保留 cycle_data 中的平均值
         qDebug() << "getLatestCycleData 从 period_history 读取 lastPeriodStart:"
                  << data.lastPeriodStart.toString("yyyy-MM-dd");
     }
@@ -139,19 +155,75 @@ CycleData HealthCalculator::getLatestCycleData()
 
 bool HealthCalculator::recordPeriodStart(const QDate &startDate)
 {
-    CycleData current = getLatestCycleData();
     QSqlDatabase db = getDB();
     QSqlQuery query(db);
 
-    query.prepare("INSERT OR REPLACE INTO period_history (start_date, duration) VALUES (?, ?)");
+    // 🔥 插入时不设置 duration（留空，表示未结束）
+    query.prepare("INSERT OR REPLACE INTO period_history (start_date) VALUES (?)");
     query.bindValue(0, startDate.toString("yyyy-MM-dd"));
-    query.bindValue(1, current.periodLength);
 
     if (!query.exec()) {
         qDebug() << "记录经期开始失败:" << query.lastError().text();
         return false;
     }
 
+    // 更新 cycle_data 中的 last_period_start
+    CycleData current = getLatestCycleData();
     current.lastPeriodStart = startDate;
     return saveCycleData(current);
+}
+
+// v5.0新增：情绪记录方法
+bool HealthCalculator::saveMoodRecord(const QDate &date, int moodLevel, const QString &diary)
+{
+    QSqlDatabase db = getDB();
+    QSqlQuery query(db);
+
+    query.prepare("INSERT OR REPLACE INTO mood_history (date, mood_level, diary) VALUES (?, ?, ?)");
+    query.bindValue(0, date.toString("yyyy-MM-dd"));
+    query.bindValue(1, moodLevel);
+    query.bindValue(2, diary);
+
+    if (!query.exec()) {
+        qDebug() << "保存情绪记录失败:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+QList<QPair<QDate, int>> HealthCalculator::getMoodHistory(const QDate &startDate, const QDate &endDate)
+{
+    QList<QPair<QDate, int>> result;
+    QSqlDatabase db = getDB();
+    QSqlQuery query(db);
+
+    query.prepare("SELECT date, mood_level FROM mood_history WHERE date >= ? AND date <= ? ORDER BY date ASC");
+    query.bindValue(0, startDate.toString("yyyy-MM-dd"));
+    query.bindValue(1, endDate.toString("yyyy-MM-dd"));
+    query.exec();
+
+    while (query.next()) {
+        QDate date = QDate::fromString(query.value(0).toString(), "yyyy-MM-dd");
+        int level = query.value(1).toInt();
+        result.append({date, level});
+    }
+    return result;
+}
+
+QList<QPair<QDate, int>> HealthCalculator::getRecentMoodRecords(int count)
+{
+    QList<QPair<QDate, int>> result;
+    QSqlDatabase db = getDB();
+    QSqlQuery query(db);
+
+    query.prepare("SELECT date, mood_level FROM mood_history ORDER BY date DESC LIMIT ?");
+    query.bindValue(0, count);
+    query.exec();
+
+    while (query.next()) {
+        QDate date = QDate::fromString(query.value(0).toString(), "yyyy-MM-dd");
+        int level = query.value(1).toInt();
+        result.prepend({date, level});  // 按日期升序
+    }
+    return result;
 }

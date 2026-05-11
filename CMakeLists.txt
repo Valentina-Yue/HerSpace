@@ -9,8 +9,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Charts LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts LinguistTools)
+# 引入所需模块：Widgets, Sql, Charts, Network
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Charts Network LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql Charts Network LinguistTools)
 
 set(TS_FILES HerSpace_de_DE.ts)
 
@@ -42,6 +43,11 @@ set(PROJECT_SOURCES
         healthstatsdialog.ui
         databasemanager.h
         databasemanager.cpp
+        aimanager.h
+        aimanager.cpp
+        moodhistorydialog.h
+        moodhistorydialog.cpp
+        moodhistorydialog.ui
         resources.qrc
         ${TS_FILES}
 )
@@ -56,6 +62,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         periodstartdialog.h periodstartdialog.cpp periodstartdialog.ui
         databasemanager.h
         databasemanager.cpp
+        aimanager.h aimanager.cpp
+        moodhistorydialog.h moodhistorydialog.cpp moodhistorydialog.ui
+
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
@@ -75,7 +84,7 @@ endif()
 target_include_directories(HerSpace PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 链接必要的库：Widgets, Sql, Charts
-target_link_libraries(HerSpace PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::Charts)
+target_link_libraries(HerSpace PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network)
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.HerSpace)

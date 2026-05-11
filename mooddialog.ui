@@ -120,9 +120,6 @@
      <property name="text">
       <string>想写点什么吗？（可选）</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
     </widget>
    </item>
    <item>
@@ -150,17 +147,6 @@
        <property name="minimumHeight">
         <number>40</number>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    background-color: #e6c4c0;
-    border-radius: 20px;
-    padding: 10px;
-    font-weight: bold;
-}
-QPushButton:hover {
-    background-color: #dbb2ad;
-}</string>
-       </property>
       </widget>
      </item>
      <item>
@@ -171,17 +157,6 @@ QPushButton:hover {
        <property name="minimumHeight">
         <number>40</number>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-    background-color: #d4c4c0;
-    border-radius: 20px;
-    padding: 10px;
-    font-weight: bold;
-}
-QPushButton:hover {
-    background-color: #c4b2ad;
-}</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -189,5 +164,27 @@ QPushButton:hover {
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnSave</sender>
+   <signal>clicked()</signal>
+   <receiver>MoodDialog</receiver>
+   <slot>accept()</slot>
+  </connection>
+  <connection>
+   <sender>btnCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>MoodDialog</receiver>
+   <slot>reject()</slot>
+  </connection>
+  <connection>
+   <sender>sliderMood</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MoodDialog</receiver>
+   <slot>on_sliderMood_valueChanged(int)</slot>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_sliderMood_valueChanged(int)</slot>
+ </slots>
 </ui>

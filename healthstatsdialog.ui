@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>550</height>
+    <width>700</width>
+    <height>950</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>650</width>
+    <height>900</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>健康统计</string>
@@ -17,6 +23,9 @@
    <string notr="true">background-color: #fdf6f0;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>8</number>
+   </property>
    <item>
     <widget class="QLabel" name="labelTitle">
      <property name="font">
@@ -29,7 +38,7 @@
       <string>📊 周期统计分析</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -40,27 +49,27 @@
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(255, 240, 235, 0.6); border-radius: 12px; padding: 12px;</string>
+     </property>
      <property name="text">
       <string>平均周期：-- 天    平均经期持续：-- 天</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(255, 240, 235, 0.6); border-radius: 12px; padding: 12px;</string>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>近期周期波动</string>
-     </property>
+    <widget class="QGroupBox" name="groupBoxCycle">
      <property name="font">
       <font>
        <pointsize>11</pointsize>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="title">
+      <string>📈 近期周期波动</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -70,13 +79,108 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBoxMood">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>😊 近期情绪趋势</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <layout class="QVBoxLayout" name="moodChartLayout"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBoxAI">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>🤖 AI 健康建议</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QTextEdit" name="textAIAdvice">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QTextEdit {
+    background-color: white;
+    border: 1px solid #e6d5c9;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 11pt;
+    line-height: 1.5;
+}
+QTextEdit:focus {
+    border: 1px solid #c96b7e;
+}</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutAI">
+        <item>
+         <widget class="QPushButton" name="btnRefreshAI">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #c9b2a6;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-weight: bold;
+    color: white;
+}
+QPushButton:hover {
+    background-color: #b89f92;
+}</string>
+          </property>
+          <property name="text">
+           <string>🔄 刷新建议</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="btnClose">
-     <property name="text">
-      <string>✓ 关闭</string>
-     </property>
-     <property name="minimumHeight">
-      <number>40</number>
-     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
     background-color: #e6c4c0;
@@ -87,6 +191,9 @@
 QPushButton:hover {
     background-color: #dbb2ad;
 }</string>
+     </property>
+     <property name="text">
+      <string>✓ 关闭</string>
      </property>
     </widget>
    </item>

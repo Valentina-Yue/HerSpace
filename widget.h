@@ -5,6 +5,7 @@
 #include <QDate>
 #include "healthcalculator.h"
 #include "inspiremanager.h"
+#include "aimanager.h"
 #include <QTimer>
 #include <QSqlQuery>
 #include <QMessageBox>
@@ -32,12 +33,24 @@ private slots:
     void on_btnHistory_clicked();
     void on_btnPeriodStart_clicked();
     void on_btnExit_clicked();
+    void on_btnMoodHistory_clicked();
+
+    void requestAIAdvice();
+    void requestAIInspiration();
+    void onAIAdviceReady(const QString &advice);
+    void onAIInspirationReady(const QString &inspiration);
+    void onAIError(const QString &message);
 
 private:
     Ui::Widget *ui;
     HealthCalculator *healthCalc;
     CycleData currentCycleData;
     InspireManager inspireMgr;          // 语录管理器
+    AIManager *aiManager;
+    QString aiGeneratedAdvice;  // 存储 AI 生成的建议
+    bool isInPeriod = false;   //表示正在经期中，后续每天提醒
+    QDate periodStartDate;
+
 
     void updateUIForSelectedDate(const QDate &date);
     void refreshHeartWidget();
